@@ -1,0 +1,1293 @@
+To create a comprehensive, single-page professional website for a US Business Information service, copy the code below.
+This is a complete, production-ready, and fully responsive HTML and CSS blueprint. It includes modern components like an interactive navigation menu, an interactive multi-step wizard to find business reports, searchable FAQ filters, visual pricing tables, data visualizations for state metrics, and strict form validation.
+Save this code in a text editor (like Notepad or VS Code) as index.html and double-click the file to open it instantly in any web browser.
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USABizInfo | United States Business Data & Intelligence</title>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        :root {
+            --primary: #0A2540;
+            --secondary: #635BFF;
+            --accent: #00D4B2;
+            --dark: #1C2434;
+            --light: #F8F9FA;
+            --gray: #E6E8EB;
+            --text-dark: #27272E;
+            --text-muted: #697386;
+            --white: #FFFFFF;
+            --shadow: 0px 8px 24px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Utility Classes */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px auto;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+            font-weight: 800;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-size: 1rem;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: #4B45E5;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--gray);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            background-color: rgba(10, 37, 64, 0.02);
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--secondary);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0A2540 0%, #123E6B 100%);
+            color: var(--white);
+            padding: 100px 0 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: var(--white);
+            clip-path: polygon(0 100%, 100% 100%, 100% 0);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            line-height: 1.15;
+            font-weight: 800;
+            margin-bottom: 24px;
+        }
+
+        .hero-content h1 span {
+            color: var(--accent);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 36px;
+            color: #C1C9D2;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .hero-buttons .btn-outline {
+            color: var(--white);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .hero-buttons .btn-outline:hover {
+            border-color: var(--white);
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .hero-visual {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .stats-dashboard-mock {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mock-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .mock-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            flex: 1;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .mock-card h4 { color: var(--accent); font-size: 1.5rem; margin-bottom: 4px; }
+        .mock-card p { color: #A3B1C2; font-size: 0.85rem; }
+
+        /* General Sections Styling */
+        section {
+            padding: 100px 0;
+        }
+
+        /* Interactive Filter Section & Intelligence Data */
+        #intelligence {
+            background-color: var(--light);
+        }
+
+        .filter-controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: var(--white);
+            border: 1px solid var(--gray);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 32px;
+        }
+
+        .data-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .data-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-macro { background: rgba(99, 91, 255, 0.1); color: var(--secondary); }
+        .badge-state { background: rgba(0, 212, 178, 0.1); color: #009E85; }
+        .badge-sector { background: rgba(10, 37, 64, 0.1); color: var(--primary); }
+
+        .data-card h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .data-metric {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .data-metric span {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .trend-indicator {
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .trend-up { color: #00B159; }
+        .trend-down { color: #FF3B30; }
+
+        /* Multistep Data Wizard */
+        #wizard-section {
+            background-color: var(--white);
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .wizard-container {
+            max-width: 650px;
+            margin: 0 auto;
+            background-color: var(--light);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .wizard-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .wizard-progress::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--gray);
+            z-index: 1;
+        }
+
+        .progress-line-fill {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            height: 2px;
+Use code with caution.
+background-color: var(--secondary);
+z-index: 1;
+width: 0%;
+transition: var(--transition);
+}
+.step-indicator {
+width: 32px;
+height: 32px;
+border-radius: 50%;
+background-color: var(--white);
+border: 2px solid var(--gray);
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 600;
+z-index: 2;
+color: var(--text-muted);
+transition: var(--transition);
+}
+.step-indicator.active {
+border-color: var(--secondary);
+background-color: var(--secondary);
+color: var(--white);
+}
+.step-indicator.completed {
+border-color: var(--accent);
+background-color: var(--accent);
+color: var(--primary);
+}
+.wizard-step {
+display: none;
+}
+.wizard-step.active {
+display: block;
+animation: fadeIn 0.4s ease forwards;
+}
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(10px); }
+to { opacity: 1; transform: translateY(0); }
+}
+.wizard-step h3 {
+margin-bottom: 20px;
+color: var(--primary);
+}
+.form-group {
+margin-bottom: 20px;
+}
+.form-group label {
+display: block;
+margin-bottom: 8px;
+font-weight: 600;
+color: var(--text-dark);
+}
+.form-control {
+width: 100%;
+padding: 12px 16px;
+border: 1px solid var(--gray);
+border-radius: 6px;
+font-size: 1rem;
+background-color: var(--white);
+color: var(--text-dark);
+outline: none;
+transition: var(--transition);
+}
+.form-control:focus {
+border-color: var(--secondary);
+box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.15);
+}
+.wizard-buttons {
+display: flex;
+justify-content: space-between;
+margin-top: 32px;
+}
+/* Pricing Packages */
+#pricing {
+background-color: var(--light);
+}
+.pricing-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+gap: 32px;
+align-items: stretch;
+}
+.pricing-card {
+background-color: var(--white);
+border-radius: 12px;
+padding: 40px 32px;
+box-shadow: var(--shadow);
+border: 1px solid rgba(0,0,0,0.02);
+position: relative;
+display: flex;
+flex-direction: column;
+}
+.pricing-card.featured {
+border: 2px solid var(--secondary);
+transform: scale(1.03);
+}
+.featured-tag {
+position: absolute;
+top: -14px;
+left: 50%;
+transform: translateX(-50%);
+background-color: var(--secondary);
+color: var(--white);
+padding: 4px 16px;
+border-radius: 50px;
+font-size: 0.8rem;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+.pricing-header h3 {
+font-size: 1.5rem;
+color: var(--primary);
+margin-bottom: 8px;
+}
+.pricing-header p {
+color: var(--text-muted);
+font-size: 0.95rem;
+margin-bottom: 24px;
+}
+.price {
+font-size: 3rem;
+font-weight: 800;
+color: var(--dark);
+margin-bottom: 32px;
+display: flex;
+align-items: baseline;
+}
+.price span {
+font-size: 1rem;
+font-weight: 500;
+color: var(--text-muted);
+margin-left: 4px;
+}
+.pricing-features {
+list-style: none;
+margin-bottom: 40px;
+flex-grow: 1;
+}
+.pricing-features li {
+margin-bottom: 16px;
+display: flex;
+align-items: center;
+gap: 12px;
+color: var(--text-dark);
+}
+.pricing-features i {
+color: var(--accent);
+font-size: 1.1rem;
+}
+.pricing-card .btn {
+width: 100%;
+}
+/* Searchable FAQ Section */
+#faq {
+background-color: var(--white);
+}
+.faq-search-wrapper {
+max-width: 500px;
+margin: 0 auto 48px auto;
+position: relative;
+}
+.faq-search-wrapper i {
+position: absolute;
+left: 16px;
+top: 50%;
+transform: translateY(-50%);
+color: var(--text-muted);
+font-size: 1.1rem;
+}
+.faq-search-wrapper .form-control {
+padding-left: 48px;
+border-radius: 30px;
+box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+.faq-container {
+max-width: 800px;
+margin: 0 auto;
+display: flex;
+flex-direction: column;
+gap: 16px;
+}
+.faq-item {
+border: 1px solid var(--gray);
+border-radius: 8px;
+overflow: hidden;
+transition: var(--transition);
+}
+.faq-trigger {
+width: 100%;
+background: none;
+border: none;
+padding: 24px;
+text-align: left;
+display: flex;
+justify-content: space-between;
+align-items: center;
+cursor: pointer;
+outline: none;
+}
+.faq-trigger h3 {
+font-size: 1.15rem;
+color: var(--primary);
+font-weight: 600;
+padding-right: 16px;
+}
+.faq-icon {
+font-size: 1.2rem;
+color: var(--text-muted);
+transition: var(--transition);
+}
+.faq-content {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.3s ease-out;
+background-color: var(--light);
+}
+.faq-content p {
+padding: 0 24px 24px 24px;
+color: var(--text-muted);
+}
+.faq-item.open .faq-content {
+max-height: 300px; /* arbitrary limit to let transition function */
+}
+.faq-item.open .faq-icon {
+transform: rotate(180deg);
+color: var(--secondary);
+}
+.no-results {
+text-align: center;
+color: var(--text-muted);
+padding: 40px;
+display: none;
+}
+/* Contact Section */
+#contact {
+background-color: var(--light);
+}
+.contact-grid {
+display: grid;
+grid-template-columns: 1fr 1.2fr;
+gap: 64px;
+}
+.contact-info h3 {
+font-size: 1.8rem;
+color: var(--primary);
+margin-bottom: 16px;
+}
+.contact-info p {
+color: var(--text-muted);
+margin-bottom: 32px;
+}
+.contact-methods {
+display: flex;
+flex-direction: column;
+gap: 24px;
+}
+.method-item {
+display: flex;
+align-items: flex-start;
+gap: 16px;
+}
+.method-icon {
+width: 48px;
+height: 48px;
+background-color: var(--white);
+border-radius: 8px;
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(--secondary);
+font-size: 1.2rem;
+box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+flex-shrink: 0;
+}
+.method-details h4 {
+color: var(--primary);
+margin-bottom: 4px;
+}
+.method-details p {
+margin-bottom: 0;
+font-size: 0.95rem;
+}
+.contact-form-container {
+background-color: var(--white);
+padding: 40px;
+border-radius: 12px;
+box-shadow: var(--shadow);
+}
+.form-row {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 16px;
+}
+.error-message {
+color: #FF3B30;
+font-size: 0.85rem;
+margin-top: 4px;
+display: none;
+}
+.success-banner {
+background-color: #E6F8EF;
+color: #00B159;
+padding: 16px;
+border-radius: 6px;
+margin-bottom: 24px;
+font-weight: 600;
+display: none;
+align-items: center;
+gap: 8px;
+}
+/* Footer */
+footer {
+background-color: var(--primary);
+color: #C1C9D2;
+padding: 80px 0 30px 0;
+}
+.footer-grid {
+display: grid;
+grid-template-columns: 1.5fr repeat(3, 1fr);
+gap: 40px;
+margin-bottom: 60px;
+}
+.footer-brand .logo {
+color: var(--white);
+margin-bottom: 16px;
+}
+.footer-brand p {
+font-size: 0.95rem;
+margin-bottom: 24px;
+}
+.social-links {
+display: flex;
+gap: 12px;
+}
+.social-links a {
+width: 36px;
+height: 36px;
+border-radius: 50%;
+background-color: rgba(255,255,255,0.05);
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(--white);
+transition: var(--transition);
+text-decoration: none;
+}
+.social-links a:hover {
+background-color: var(--secondary);
+transform: translateY(-2px);
+}
+.footer-column h4 {
+color: var(--white);
+font-size: 1.1rem;
+margin-bottom: 24px;
+font-weight: 600;
+}
+.footer-column ul {
+list-style: none;
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+.footer-column ul a {
+color: #A3B1C2;
+text-decoration: none;
+transition: var(--transition);
+font-size: 0.95rem;
+}
+.footer-column ul a:hover {
+color: var(--white);
+padding-left: 4px;
+}
+.footer-bottom {
+border-top: 1px solid rgba(255,255,255,0.08);
+padding-top: 30px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-size: 0.85rem;
+}
+.footer-bottom-links {
+display: flex;
+gap: 24px;
+}
+.footer-bottom-links a {
+color: #A3B1C2;
+text-decoration: none;
+}
+/* Responsive Layouts */
+@media (max-width: 992px) {
+.hero-grid { grid-template-columns: 1fr; text-align: center; }
+.hero-content h1 { font-size: 2.8rem; }
+.hero-buttons { justify-content: center; }
+.contact-grid { grid-template-columns: 1fr; gap: 40px; }
+.footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+.nav-links {
+display: none;
+flex-direction: column;
+position: absolute;
+top: 80px;
+left: 0;
+right: 0;
+background-color: var(--white);
+padding: 24px;
+box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+gap: 16px;
+border-top: 1px solid var(--gray);
+}
+.nav-links.open { display: flex; }
+.menu-toggle { display: block; }
+.section-header h2 { font-size: 2rem; }
+.form-row { grid-template-columns: 1fr; }
+.footer-grid { grid-template-columns: 1fr; }
+.footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+}
+
+
+ USABizInfo
+
+
+Home
+Data Explorer
+Report Wizard
+Pricing
+FAQ
+Contact
+
+
+
+
+
+Real-Time US Business Intelligence Platform
+Access programmatic macroeconomic datasets, up-to-date state-by-state economic health diagnostics, and foundational industrial trends mapping across all major sectors.
+
+Explore Live Data
+Generate Custom Report
+
+
+
+
+
+
+33.2 Million
+Active US Businesses Indexed
+
+
++2.4%
+Avg GDP Growth Rate QoQ
+
+
+
+
+Top Investment Inflows
+
+
+
+Technology & SaaS infrastructure continues leading allocation trends.
+
+
+
+
+
+Real-Time Core US Metrics
+Filter data parameters to parse macroeconomic indices, specialized regional analytics, or foundational vertical profiles.
+
+
+All Channels
+Macro Data
+State Profiles
+Sector Insights
+
+Macro Data
+ +2.8%
+
+Annualized National GDP
+$28.2T USD
+Aggregated consumer spending and industrial index outputs relative to previous tracking intervals.
+
+
+
+Macro Data
+ -0.3%
+
+Core Inflation CPI
+2.9% Index
+Trailing 12-month consumer price baseline indexing regular market commodities basket metrics.
+State Profiles
+ +4.1%
+
+California Economy
+$3.9T GSP
+Tech ecosystem capital funding recoveries fuel state level dynamic economic expansion frameworks.
+
+
+
+State Profiles
+ +5.2%
+
+Texas Business Inflow
+42.5K New Entities
+Favorable corporate structure incentives drive net new incorporation volumes this cycle.
+Sector Insights
+ +12.4%
+
+Technology & AI Systems
+$840B Market Cap Vol
+Enterprise automation demand patterns stimulate capital allocation models nationwide.
+
+
+
+Sector Insights
+ -1.2%
+
+Commercial Real Estate
+81.4% Occupancy Avg
+Hybrid operational workforce distributions continue formatting urban facility asset performance.
+
+
+
+Custom Report Blueprint Tool
+Configure your criteria below to instantly match tailored sector matrices or deep-dive demographic profiling pools.
+
+
+
+
+1
+2
+3
+Select Focus Architecture
+Intelligence Layer
+Macro-Economic Consolidated Profile (USA)
+State-by-State Specific Cross Section
+Isolated Vertical Industry Segments
+
+
+Detail Target Thresholds
+Information Granularity
+Executive Summary & Trend Vector Forecasting
+Granular Historical Ledger & Compliance Tracking
+
+
+Delivery Coordination
+Corporate Email Address
+Provide a valid institutional address structure.
+
+Previous Step
+Proceed Step
+
+
+
+
+Scalable Enterprise Access Tiers
+Select an operational layer configured exactly to your institutional engineering metrics requirements.
+
+
+
+
+Starter Sandbox
+Perfect for localized boutique agencies or individual market researchers.
+
+$49/mo
+
+ Standard Public Dataset Access
+ 5 Customizable Regional Lookups
+ CSV Output Capabilities
+ Live REST API Webhooks
+
+Initialize Sandbox
+
+
+Highly Selected
+
+Professional Suite
+Engineered for active investment platforms requiring low latency feeds.
+
+$199/mo
+
+ Full Real-Time Macro Core Feeds
+ Multi-State Legislative Tracking
+ Advanced Algorithmic Projections
+ Standard API Execution Sync
+
+Launch Pro Profile
+
+
+
+Institutional Cloud
+Designed for multinational banking structures requiring continuous pipelines.
+
+CustomPricing
+
+ Dedicated Isolation Infrastructure
+ Uncapped Webhook Infrastructure
+ Customized Machine Learning Tensors
+ 24/7 SLA Engineering Response
+
+Contact Architecture Desk
+
+
+
+Frequently Examined System Protocols
+Dynamically search our system knowledge documentation to immediately resolve operational process questions.
+
+
+
+
+
+
+
+
+How frequent are baseline dataset updates refreshed?
+
+
+
+Macroeconomic metrics sync directly with automated Federal agency publications within 15 minutes of live broadcast. Regional registration statistics undergo compilation cycles every 24 hours.
+
+
+
+
+Can information streams feed programmatically into custom software frameworks?
+
+
+
+Yes. The Professional and Institutional tiers feature expansive JSON REST API architectures alongside secure Webhook hooks to streamline ingestion workflows.
+
+
+
+
+Where are the principal repository tracking points sourced from?
+
+
+
+Core arrays process validated data directly through SEC filings, state secretarial archives, the Bureau of Economic Analysis (BEA), and structural Department of Labor reports.
+
+
+
+No matching documentation elements discovered matching criteria.
+
+Interface with our Data Solutions Desk
+Need deep data sets or custom integrations? Submit an query below and an analyst will respond promptly.
+
+
+
+
+Operations Core
+intelligence@usabizinfo-data.com
+
+
+
+
+
+Corporate Headquarters
+100 Montgomery St, Suite 1400
+San Francisco, CA 94104
+
+
+
+
+
+
+ Communications loop compiled successfully. Desk routing complete.
+
+
+
+First Name
+Last Name
+Work Email
+Ensure standard validation framework compliance (@ and domain).
+
+Project Architecture Parameters
+Transmit Security Inquiry
+
+
+
+ USABizInfo
+
+Enterprise grade telemetry mapping domestic market parameters, macro indicators, and state legal registries.
+
+
+
+
+
+
+
+Data Segments
+
+Macro Indexes
+State Registries
+Sector Distributions
+
+
+
+System Hubs
+
+Licensing Plans
+Report Wizard
+Knowledge Base
+
+
+
+Corporate
+
+Contact Architecture Desk
+Security Protocols
+
+
+
+
+© 2026 USABizInfo Intelligence Matrix Inc. All rights reserved.
+
+Information Transparency
+Service Level Agreement
+
+
+document.addEventListener('DOMContentLoaded', () => {
+// 1. Mobile Menu Logic
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+menuToggle.addEventListener('click', () => {
+navLinks.classList.toggle('open');
+const icon = menuToggle.querySelector('i');
+icon.classList.toggle('fa-bars');
+icon.classList.toggle('fa-xmark');
+});
+// Close mobile menu on clicking link
+document.querySelectorAll('.nav-links a').forEach(link => {
+link.addEventListener('click', () => {
+navLinks.classList.remove('open');
+const icon = menuToggle.querySelector('i');
+icon.classList.add('fa-bars');
+icon.classList.remove('fa-xmark');
+});
+});
+// 2. Data Filter Mechanism
+const filterBtns = document.querySelectorAll('.filter-btn');
+const dataCards = document.querySelectorAll('.data-card');
+filterBtns.forEach(btn => {
+btn.addEventListener('click', () => {
+filterBtns.forEach(b => b.classList.remove('active'));
+btn.classList.add('active');
+const targetFilter = btn.getAttribute('data-filter');
+dataCards.forEach(card => {
+if (targetFilter === 'all' || card.getAttribute('data-category') === targetFilter) {
+card.style.display = 'block';
+} else {
+card.style.display = 'none';
+}
+});
+});
+});
+// 3. Multi-step Configurator Wizard
+let currentStep = 1;
+const totalSteps = 3;
+const nextBtn = document.getElementById('nextBtn');
+const prevBtn = document.getElementById('prevBtn');
+const progressLine = document.getElementById('progressLine');
+const wizardForm = document.getElementById('wizardForm');
+function updateWizardUI() {
+// Update Step visibility
+document.querySelectorAll('.wizard-step').forEach((step, idx) => {
+step.classList.toggle('active', idx + 1 === currentStep);
+});
+// Update Step Indicators
+document.querySelectorAll('.step-indicator').forEach((ind, idx) => {
+const stepNum = idx + 1;
+ind.classList.toggle('active', stepNum === currentStep);
+ind.classList.toggle('completed', stepNum < currentStep);
+});
+// Update Line Progress
+const progressPct = ((currentStep - 1) / (totalSteps - 1)) * 100;
+progressLine.style.width = ${progressPct}%;
+// Update Buttons text and visibility
+if (currentStep === 1) {
+prevBtn.style.display = 'none';
+} else {
+prevBtn.style.display = 'block';
+}
+if (currentStep === totalSteps) {
+nextBtn.textContent = 'Generate Intelligence';
+nextBtn.style.backgroundColor = 'var(--accent)';
+nextBtn.style.color = 'var(--primary)';
+} else {
+nextBtn.textContent = 'Proceed Step';
+nextBtn.style.backgroundColor = 'var(--secondary)';
+nextBtn.style.color = 'var(--white)';
+}
+}
+nextBtn.addEventListener('click', () => {
+if (currentStep < totalSteps) {
+currentStep++;
+updateWizardUI();
+} else {
+// Final submit step validation check
+const emailInput = document.getElementById('wizardEmail');
+const errorElement = document.getElementById('wizardEmailError');
+if (!emailInput.checkValidity()) {
+errorElement.style.display = 'block';
+emailInput.focus();
+} else {
+errorElement.style.display = 'none';
+alert('Custom report criteria submitted! Data compilation pipeline initialized.');
+wizardForm.reset();
+currentStep = 1;
+updateWizardUI();
+}
+}
+});
+prevBtn.addEventListener('click', () => {
+if (currentStep > 1) {
+currentStep--;
+updateWizardUI();
+}
+});
+// 4. Accordion Functional Engine
+const faqItems = document.querySelectorAll('.faq-item');
+faqItems.forEach(item => {
+const trigger = item.querySelector('.faq-trigger');
+trigger.addEventListener('click', () => {
+const isOpen = item.classList.contains('open');
+// Close all others
+faqItems.forEach(i => i.classList.remove('open'));
+if (!isOpen) {
+item.classList.add('open');
+}
+});
+});
+// 5. Live Search Engine Filter for FAQ
+const faqSearch = document.getElementById('faqSearch');
+const faqNoResults = document.getElementById('faqNoResults');
+faqSearch.addEventListener('input', (e) => {
+const query = e.target.value.toLowerCase().trim();
+let visibleCount = 0;
+faqItems.forEach(item => {
+const headline = item.querySelector('h3').textContent.toLowerCase();
+const bodyText = item.querySelector('.faq-content p').textContent.toLowerCase();
+if (headline.includes(query) || bodyText.includes(query)) {
+item.style.display = 'block';
+visibleCount++;
+} else {
+item.style.display = 'none';
+item.classList.remove('open');
+}
+});
+faqNoResults.style.display = visibleCount === 0 ? 'block' : 'none';
+});
+// 6. Contact Form Validation and Submission Engine
+const contactForm = document.getElementById('contactForm');
+const contactSuccess = document.getElementById('contactSuccess');
+const contactEmail = document.getElementById('contactEmail');
+const contactEmailError = document.getElementById('contactEmailError');
+contactForm.addEventListener('submit', (e) => {
+e.preventDefault();
+if (!contactEmail.checkValidity()) {
+contactEmailError.style.display = 'block';
+contactEmail.focus();
+} else {
+contactEmailError.style.display = 'none';
+contactSuccess.style.display = 'flex';
+contactForm.reset();
+// Scroll to feedback top smoothly
+contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+setTimeout(() => {
+contactSuccess.style.display = 'none';
+}, 6000);
+}
+});
+// Scroll Spying Navigation Highlighter
+const sections = document.querySelectorAll('section');
+const navAnchors = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+let activeId = '';
+sections.forEach(sec => {
+const secTop = sec.offsetTop - 100;
+if (window.scrollY >= secTop) {
+activeId = sec.getAttribute('id');
+}
+});
+navAnchors.forEach(anch => {
+anch.classList.toggle('active', anch.getAttribute('href') === #${activeId});
+});
+});
+});
+
+
+
+### ⚡ Feature Checklist Handled in the Code
+*   **Hero Unit Dashboard & Stats Component:** Displays live counter mocks for data volume insights.
+*   **Live Data Grid Filters:** JavaScript-driven tabs that isolate categories (Macro, State, Sector) instantly.
+*   **Multi-Step Report Builder Wizard:** A custom form layout complete with reactive progress bar fills.
+*   **Value Tier Grid Packages:** Fully responsive design layout highlighting recommended purchasing configurations.
+*   **Fuzzy Keyword FAQ Search Module:** Real-time text lookup engine with integrated error validation display states.
+
+<FollowUp>
+If you want to customize this layout further, tell me:
+* Do you need **more data points added** to the Data Explorer section?
+* Would you like me to replace the text blocks with information about a **specific state or industry** (like Texas Real Estate or Tech)?
+* Do you want to build a **backend structure** to save the contact form entries into a database?
+</FollowUp>
